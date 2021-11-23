@@ -39,7 +39,7 @@ contract Lottery is VRFConsumerBase, Ownable {
         ethUsdPriceFeed = AggregatorV3Interface(_priceFeedAddress);
         lottery_state = LOTTERY_STATE.CLOSED;
         fee = _fee;
-        keyhash = _keyhash;
+        keyhash = _keyhash; // the unique way of identify the chainlink vrf node
 
     }
 
@@ -113,10 +113,10 @@ contract Lottery is VRFConsumerBase, Ownable {
         lottery_state = LOTTERY_STATE.CLOSED;
         randomness = _randomness;
 
-        // 7 players
+        // 10 players
         // 22 
-        // 22 % 7  = 1
-        // 7 * 3 = 21
+        // 22 % 7  = 2
+        // 10 * 2 = 20
     }
 
 } 
