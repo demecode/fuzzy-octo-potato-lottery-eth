@@ -1,8 +1,7 @@
-from brownie import network, config, accounts, MockV3Aggregator
+from brownie import network, config, accounts, MockV3Aggregator, VRFCoordinatorMock, LinkToken, Contract
 from brownie.network.contract import Contract
 from web3 import Web3
 
-from scripts.deploy import deploy
 
 FORKED_LOCAL_ENVIRONMENTS = ["mainnet-fork", "mainnet-fork-dev"]
 LOCAL_BLOCKCHAIN_ENVIRONMENTS = ["development", "ganache-local", "ganache-local-3"]
@@ -30,7 +29,7 @@ def get_account(index=None, id=None):
     return accounts.add(config["wallets"]["from_key"])
 
 contract_to_mock = {
-    "eth_usd_price_feed": MockV3Aggregator
+    "eth_usd_price_feed": MockV3Aggregator, "vrf_coordinator": VRFCoordinatorMock, "link_token": LinkToken,
 }
 
 
@@ -63,6 +62,8 @@ def get_contract(contract_name):
 def deploy_mocks(decimal=DECIMALS, initial_value=INITIAL_VALUE):
     account  = get_account()
     MockV3Aggregator.deploy(decimal, initial_value, {"from": account})
+    link_token = LinkToken.deploy({"from":account})
+    VRFCoordinatorMock.deploy(link_token.address, {"from":account})
     print("DEPLOYED BUMBA")
     
     
