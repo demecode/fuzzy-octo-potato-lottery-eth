@@ -1,9 +1,9 @@
 # 1. In order to to deploty a contract you always need an account
 
 from os import access
-from scripts.helpers import get_account, get_contract
+from scripts.helpers import get_account, get_contract, fund_with_link
 from brownie import Lottery, network, config
-
+import time
 
 
 def deploy():
@@ -42,14 +42,16 @@ def enter_lotto():
 def end_lotto():
     account = get_account()
     lotto = Lottery[-1]
-    transactionn = lotto.endLottery()
-    
     # endLottery need a link token. We use the requestRandomness function from chainlink
     # therefore we need to fund the contract with the Link token
-    # will add the funding with Link token as a helper
-    
-    
-    
+    # will add the funding with Link token as a helper (fund_with_link)
+    transaction = fund_with_link(lotto.address)
+    transaction.wait(1)
+    end_transaction = lotto.endLottery({'from': account})
+    end_transaction.wait(1)
+    time.sleep(60)
+    print(f"LOTTO ENDED... {lotto.recentWinner()} is the winner - congrats!")
+     
     
     
 def main():
