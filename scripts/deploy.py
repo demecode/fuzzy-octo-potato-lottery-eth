@@ -6,9 +6,9 @@ from brownie import Lottery, network, config
 import time
 
 
-def deploy():
+def deploy_lotto():
     account = get_account()
-    lottery = Lottery.deploy(get_contract("eth_usd_price_feed").address,
+    lotto = Lottery.deploy(get_contract("eth_usd_price_feed").address,
                              get_contract("vrf_coordinator").address,
                              get_contract("link_token").address,
                              config["networks"][network.show_active()]["fee"],
@@ -17,8 +17,8 @@ def deploy():
                             # to pubish this we need to get a verify key, if thats not available, just return False
                              publish_source = config["networks"][network.show_active()].get("verify", False)
     )
-    
-    print('THE LOTTO IS DEPLOYED')   
+    print('THE LOTTO IS DEPLOYED')
+    return lotto 
     
 
 def start_lotto():
@@ -55,7 +55,7 @@ def end_lotto():
     
     
 def main():
-    deploy()
+    deploy_lotto()
     start_lotto()
     enter_lotto()
     end_lotto()
