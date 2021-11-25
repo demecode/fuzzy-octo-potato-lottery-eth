@@ -94,7 +94,7 @@ contract Lottery is VRFConsumerBase, Ownable {
         // More secure and good practice for randomness:
         lottery_state = LOTTERY_STATE.CALCULATING_WINNER;
         bytes32 requestId = requestRandomness(keyhash, fee); // this should return a bytes32 request id as per the (requestRandomness chainlink) function states/rerturns
-
+        emit RequestedRandomness(requestId);
 
 
     }
