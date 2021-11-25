@@ -26,6 +26,7 @@ contract Lottery is VRFConsumerBase, Ownable {
     LOTTERY_STATE public lottery_state;
     uint256 public fee; //this is needed for the link gas fee 
     bytes32 public keyhash; // required by VRF   code base to generate random number
+    event RequestedRandomness(bytes32 requestId);
 
     // Constructor inherits VRFConsumerBase
     constructor(
