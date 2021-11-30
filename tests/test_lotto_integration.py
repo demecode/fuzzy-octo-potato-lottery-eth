@@ -18,7 +18,7 @@ def test_ensure_program_can_pick_winner():
     
     fund_with_link(lotto)
     lotto.endLottery({"from":account})
-    time.sleep(360) # wait for the chainklink node to respond
+    time.sleep(300) # wait for the chainklink node to respond
     
     assert lotto.recentWinner() == account
     assert lotto.balance() == 0
